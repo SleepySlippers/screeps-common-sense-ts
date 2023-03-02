@@ -1,3 +1,4 @@
+import { spawn_constructible_squads, Squad } from "squads/squad_loader";
 import { ErrorMapper } from "utils/ErrorMapper";
 
 declare global {
@@ -45,8 +46,15 @@ export const loop = ErrorMapper.wrapLoop(() => {
     }
   }
 
+  let squads: Squad[] = [];
   for (const spawn_key in Game.spawns){
     const spawner = Game.spawns[spawn_key];
-    
+    for (const spawn_constructible_squad of spawn_constructible_squads){
+      squads.push(spawn_constructible_squad.construct_from_spawner(spawner));
+    }
+  }
+
+  for (const squad of squads){
+    squad.Operate();
   }
 });
