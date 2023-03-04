@@ -1,48 +1,8 @@
-import { NAME_SEPARATOR } from "roles/role";
-import { InitialSquad } from "./initial_squad";
-import { SpawnTemplate, GenerateSquadList, SpawnOrOperateSquad } from "./squad_utils";
+import { SpawnConstructibleSquad } from './squad_base';
+import { InitialSquadInst } from './initial_squad';
+import { DoubleSquadInst } from './double_squad';
 
-export interface Squad {
-    readonly squad_name: string,
-    readonly squad_prefix: string,
-    IsActive(): boolean,
-    Operate(): void,
-}
-
-export interface SpawnConstructible {
-    construct_from_spawner(spawner: StructureSpawn): Squad;
-}
-
-export class SpawnConstructibleSquad implements Squad, SpawnConstructible {
-    readonly squad_name: string;
-    spawner!: StructureSpawn;
-    readonly spawn_sequence?: SpawnTemplate[];
-
-    public get squad_prefix(): string {
-        return this.spawner + NAME_SEPARATOR + this.squad_name;
-    }
-
-    protected constructor(squad_name: string, spawn_sequence?: SpawnTemplate[]) {
-        this.squad_name = squad_name;
-        this.spawn_sequence = spawn_sequence;
-    }
-
-    construct_from_spawner(spawner: StructureSpawn): Squad {
-        this.spawner = spawner;
-        return this;
-    }
-
-    IsActive(): boolean {
-        return true;
-    }
-    Operate(): void {
-        const is_active = this.IsActive();
-        let squad_list = GenerateSquadList(this, this.spawn_sequence!);
-        SpawnOrOperateSquad(this.spawner, squad_list, is_active);
-    }
-
-}
-
-export const spawn_constructible_squads: SpawnConstructibleSquad[] = [
-    new InitialSquad(),
+export let spawn_constructible_squads: SpawnConstructibleSquad[] = [
+    InitialSquadInst,
+    DoubleSquadInst,
 ];

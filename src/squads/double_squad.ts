@@ -1,4 +1,4 @@
-import { SpawnConstructibleSquad, Squad } from "./squad_loader";
+import { SpawnConstructibleSquad } from "./squad_base";
 import { SpawnTemplate } from './squad_utils';
 import { NaiveSettings, SourceMode, TargetMode, NaiveHarvesterInst } from '../roles/naive_harvester';
 
@@ -45,13 +45,27 @@ const SPAWN_SEQUENCE: SpawnTemplate[] = [
         } as NaiveSettings),
 ]
 
-export class InitialSquad extends SpawnConstructibleSquad {
+export class DoubleSquad extends SpawnConstructibleSquad {
     constructor() {
         super("double_squad", SPAWN_SEQUENCE);
     }
 
     IsActive(): boolean {
-        // TODO: turn off this squad when can handle cooler squad
-        return true
+        const extensions = this.spawner.room.find(FIND_STRUCTURES, {
+            filter: (i) => i.structureType == STRUCTURE_EXTENSION
+        }) as StructureExtension[];
+        if (extensions.length < 2) {
+            return false;
+        }
+        const nonempty_container = this.spawner.pos.findClosestByRange(FIND_STRUCTURES, {
+            filter: (i) => i.structureType == STRUCTURE_CONTAINER &&
+                i.store[RESOURCE_ENERGY] >= 200
+        });
+        if (!nonempty_container) {
+            return false;
+        }
+        return true;
     }
 }
+
+export const DoubleSquadInst = new DoubleSquad();

@@ -1,6 +1,6 @@
-import { GetSourcesByDistance } from "memory";
 import { CreepName, Role } from "./role";
 import { MoveTowards } from '../utils/path';
+import { GetSourcesByDistance } from '../utils/memory';
 
 // priorotize delivery
 export const enum TargetMode {
@@ -95,14 +95,14 @@ function GetClosestFreeStructure(creep: Creep, type: any) {
     })
 }
 
-function GetStructureType(mode: number){
-    if (mode == TargetMode.Container){
+function GetStructureType(mode: number) {
+    if (mode == TargetMode.Container) {
         return STRUCTURE_CONTAINER;
-    } else if (mode == TargetMode.Extentions){
+    } else if (mode == TargetMode.Extentions) {
         return STRUCTURE_EXTENSION;
-    } else if (mode == TargetMode.Spawner){
+    } else if (mode == TargetMode.Spawner) {
         return STRUCTURE_SPAWN;
-    } else if (mode == TargetMode.Storage){
+    } else if (mode == TargetMode.Storage) {
         return STRUCTURE_STORAGE;
     }
     return null;
@@ -141,9 +141,9 @@ export class NaiveHarvester implements Role {
             targets.push(GetClosestFreeStructure(creep, structure_type));
         }
 
-        for (let i = 0; i < GREATEST_TARGET_MODE; ++i){
+        for (let i = 0; i < GREATEST_TARGET_MODE; ++i) {
             const structure_type = GetStructureType(i);
-            if (!structure_type){
+            if (!structure_type) {
                 continue;
             }
             targets.push(GetClosestFreeStructure(creep, structure_type));
@@ -171,7 +171,6 @@ export class NaiveHarvester implements Role {
 
             this.GoCarry(creep);
         }
-        throw new Error("Method not implemented.");
     }
     Spawn(spawner: StructureSpawn, creep_name: CreepName, settings: NaiveSettings): ScreepsReturnCode {
         let body = [WORK, CARRY, MOVE];

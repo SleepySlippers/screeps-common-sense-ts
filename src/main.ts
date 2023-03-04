@@ -1,5 +1,6 @@
-import { spawn_constructible_squads, Squad } from "squads/squad_loader";
 import { ErrorMapper } from "utils/ErrorMapper";
+import { spawn_constructible_squads } from './squads/squad_loader';
+import { Squad } from './squads/squad_base';
 
 declare global {
   /*

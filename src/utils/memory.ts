@@ -1,8 +1,9 @@
+import { contains } from './utils';
 // TODO: move memory staff here
 
-import { contains } from "lodash";
-
-
+if (!Memory.spawns) {
+    Memory.spawns = {};
+}
 
 export function GetSourcesByDistance(spawner: StructureSpawn): Id<Source>[] {
     if (!Memory.spawns[spawner.name]) {

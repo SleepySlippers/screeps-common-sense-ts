@@ -1,5 +1,5 @@
 import { CreepName, FormatCreepName, Role } from "roles/role";
-import { Squad } from "./squad_loader";
+import { Squad } from "./squad_base";
 
 export class SpawnTemplate {
     role: Role;
@@ -8,7 +8,7 @@ export class SpawnTemplate {
     // TODO: find a better name
     settings: any;
 
-    constructor(role: Role, name_additon: string, settings: any, count: number = 1){
+    constructor(role: Role, name_additon: string, settings: any, count: number = 1) {
         this.role = role;
         this.name_additon = name_additon;
         this.settings = settings;
@@ -47,21 +47,21 @@ export function GenerateSquadList(squad: Squad, spawn_sequence: SpawnTemplate[])
 
 // Returns whether tried to spawn or not
 export function SpawnOrRun(spawner: StructureSpawn, spawn_info: SpawnInfo, spawn: boolean): boolean {
-    try {
-        let creep: Creep = Game.creeps[spawn_info.creep_name];
-        if (creep) {
-            spawn_info.role.Run(creep);
-            return false;
-        }
-        if (!spawn){
-            return false;
-        }
-        spawn_info.role.Spawn(spawner, spawn_info.creep_name, spawn_info.additional_spawn_info);
-        return true;
-    } catch (error) {
-        console.log(error);
+    // try {
+    let creep: Creep = Game.creeps[spawn_info.creep_name];
+    if (creep) {
+        spawn_info.role.Run(creep);
+        return false;
     }
-    return false;
+    if (!spawn) {
+        return false;
+    }
+    spawn_info.role.Spawn(spawner, spawn_info.creep_name, spawn_info.additional_spawn_info);
+    return true;
+    // } catch (error) {
+    //     console.log(error);
+    // }
+    // return false;
 }
 
 export function SpawnOrOperateSquad(spawner: StructureSpawn, squad_list: SquadList, can_spawn: boolean = true) {

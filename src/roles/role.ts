@@ -1,4 +1,4 @@
-import { Squad } from "squads/squad_loader";
+import { Squad } from "squads/squad_base";
 
 export const NAME_SEPARATOR = "#";
 
