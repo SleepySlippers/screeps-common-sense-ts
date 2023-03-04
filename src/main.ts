@@ -17,9 +17,14 @@ declare global {
   }
 
   interface CreepMemory {
-    role: string;
-    room: string;
-    working: boolean;
+    spawner_id: Id<StructureSpawn>;
+    role_name: string;
+    settings: any;
+    current_state: any;
+  }
+
+  interface SpawnMemory {
+    sources: Id<Source>[];
   }
 
   // Syntax for adding proprties to `global` (ex "global.log")
@@ -35,7 +40,7 @@ declare global {
 export const loop = ErrorMapper.wrapLoop(() => {
   console.log(`Current game tick is ${Game.time}. No way. Wait`);
 
-  if (Game.cpu.bucket == 10000){
+  if (Game.cpu.bucket == 10000) {
     Game.cpu.generatePixel();
   }
 
@@ -47,14 +52,14 @@ export const loop = ErrorMapper.wrapLoop(() => {
   }
 
   let squads: Squad[] = [];
-  for (const spawn_key in Game.spawns){
+  for (const spawn_key in Game.spawns) {
     const spawner = Game.spawns[spawn_key];
-    for (const spawn_constructible_squad of spawn_constructible_squads){
+    for (const spawn_constructible_squad of spawn_constructible_squads) {
       squads.push(spawn_constructible_squad.construct_from_spawner(spawner));
     }
   }
 
-  for (const squad of squads){
+  for (const squad of squads) {
     squad.Operate();
   }
 });
