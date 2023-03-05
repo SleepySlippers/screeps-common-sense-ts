@@ -1,6 +1,6 @@
 import { SpawnConstructibleSquad } from "./squad_base";
 import { SpawnTemplate } from './squad_utils';
-import { NaiveSettings, SourceMode, TargetMode, NaiveHarvesterInst } from '../roles/naive_harvester';
+import { NaiveHarvesterSettings, SourceMode, TargetMode, NaiveHarvesterInst } from '../roles/naive_harvester';
 
 const SPAWN_SEQUENCE: SpawnTemplate[] = [
     new SpawnTemplate(NaiveHarvesterInst, "d#p#spwn",
@@ -8,19 +8,19 @@ const SPAWN_SEQUENCE: SpawnTemplate[] = [
             source: SourceMode.Primary,
             target: TargetMode.Spawner,
             double_worker: true,
-        } as NaiveSettings),
+        } as NaiveHarvesterSettings),
     new SpawnTemplate(NaiveHarvesterInst, "d#p#ctrl",
         {
             source: SourceMode.Primary,
             target: TargetMode.Controller,
             double_worker: true,
-        } as NaiveSettings),
+        } as NaiveHarvesterSettings),
     new SpawnTemplate(NaiveHarvesterInst, "d#p#bld",
         {
             source: SourceMode.Primary,
             target: TargetMode.Build,
             double_worker: true,
-        } as NaiveSettings),
+        } as NaiveHarvesterSettings),
 
     new SpawnTemplate(NaiveHarvesterInst, "dd#s#spwn",
         {
@@ -28,21 +28,21 @@ const SPAWN_SEQUENCE: SpawnTemplate[] = [
             target: TargetMode.Spawner,
             double_worker: true,
             double_carry: true,
-        } as NaiveSettings),
+        } as NaiveHarvesterSettings),
     new SpawnTemplate(NaiveHarvesterInst, "dd#s#ctrl",
         {
             source: SourceMode.Secondary,
             target: TargetMode.Controller,
             double_worker: true,
             double_carry: true,
-        } as NaiveSettings),
+        } as NaiveHarvesterSettings),
     new SpawnTemplate(NaiveHarvesterInst, "dd#s#bld",
         {
             source: SourceMode.Secondary,
             target: TargetMode.Build,
             double_worker: true,
             double_carry: true,
-        } as NaiveSettings),
+        } as NaiveHarvesterSettings),
 ]
 
 export class DoubleSquad extends SpawnConstructibleSquad {

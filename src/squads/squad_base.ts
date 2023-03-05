@@ -36,7 +36,9 @@ export class SpawnConstructibleSquad implements Squad, SpawnConstructible {
     }
     Operate(): void {
         const is_active = this.IsActive();
-        console.log(this.squad_name + " is " + is_active);
+        if (Game.time % 128 == 0) {
+            console.log(this.squad_name + " is " + is_active);
+        }
         let squad_list = GenerateSquadList(this, this.spawn_sequence!);
         SpawnOrOperateSquad(this.spawner, squad_list, is_active);
     }

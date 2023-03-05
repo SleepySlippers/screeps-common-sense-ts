@@ -1,6 +1,7 @@
 import { CreepName, Role } from "./role";
 import { MoveTowards } from '../utils/path';
 import { GetSourcesByDistance } from '../utils/memory';
+import { LogErr } from '../utils/utils';
 
 // priorotize delivery
 export const enum TargetMode {
@@ -19,20 +20,20 @@ export const enum SourceMode {
     Secondary, // choose source second closest to spawner
 }
 
-export class NaiveSettings {
+export class NaiveHarvesterSettings {
     source: SourceMode = SourceMode.Primary;
     target: TargetMode = TargetMode.Spawner;
     double_worker: boolean = false;
     double_carry: boolean = false;
 }
 
-class NaiveState {
+class NaiveHarvesterState {
     harvest: boolean = true;
 }
 
-interface NaiveMemory extends CreepMemory {
-    settings: NaiveSettings;
-    current_state: NaiveState;
+interface NaiveHarvesterMemory extends CreepMemory {
+    settings: NaiveHarvesterSettings;
+    current_state: NaiveHarvesterState;
 }
 
 function GetSource(spawner: StructureSpawn, mode: SourceMode): Source | null {
@@ -50,9 +51,7 @@ function GetSource(spawner: StructureSpawn, mode: SourceMode): Source | null {
     return Game.getObjectById(srcs[src_ind]);
 }
 
-function LogErr(creep: Creep, message: any): void {
-    console.log("Error in creep `" + creep.name + "`: " + message);
-}
+
 
 type Actionable = StructureController | ConstructionSite | Structure | Source;
 
@@ -129,7 +128,7 @@ export class NaiveHarvester implements Role {
         }
     }
 
-    private GetMemory(creep: Creep): NaiveMemory {
+    private GetMemory(creep: Creep): NaiveHarvesterMemory {
         return creep.memory;
     }
 
@@ -178,7 +177,7 @@ export class NaiveHarvester implements Role {
             this.GoCarry(creep);
         }
     }
-    Spawn(spawner: StructureSpawn, creep_name: CreepName, settings: NaiveSettings): ScreepsReturnCode {
+    Spawn(spawner: StructureSpawn, creep_name: CreepName, settings: NaiveHarvesterSettings): ScreepsReturnCode {
         let body = [WORK, CARRY, MOVE];
         // TODO: make body builder
         if (settings.double_worker) {
@@ -194,7 +193,7 @@ export class NaiveHarvester implements Role {
                 spawner_id: spawner.id,
                 role_name: this.role_name,
                 settings: settings,
-                current_state: new NaiveState(),
+                current_state: new NaiveHarvesterState(),
             }
         })
     }
