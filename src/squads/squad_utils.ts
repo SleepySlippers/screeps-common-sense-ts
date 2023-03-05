@@ -22,24 +22,24 @@ export type SpawnInfo = {
     additional_spawn_info: any;
 } & { readonly '': unique symbol };
 
-export type SquadList = Map<string, SpawnInfo> & { readonly '': unique symbol };
+export type SquadList = SpawnInfo[] & { readonly '': unique symbol };
 
 export function GenerateSquadList(squad: Squad, spawn_sequence: SpawnTemplate[]): SquadList {
-    let squad_list: Map<string, SpawnInfo> = new Map();
+    let squad_list: SpawnInfo[] = [];
+    let squad_map: Map<string, boolean> = new Map();
     for (const template of spawn_sequence) {
         let num = 1;
         for (let i = 0; i < template.count; ++i) {
             let get_name = (num: number) => FormatCreepName(squad, template.role, template.name_additon, num);
-            while (squad_list.has(get_name(num))) {
+            while (squad_map.has(get_name(num))) {
                 ++num;
             }
-            squad_list.set(get_name(num),
-                {
-                    creep_name: get_name(num),
-                    role: template.role,
-                    additional_spawn_info: template.settings,
-                } as SpawnInfo
-            );
+            squad_map.set(get_name(num), true);
+            squad_list.push({
+                creep_name: get_name(num),
+                role: template.role,
+                additional_spawn_info: template.settings,
+            } as SpawnInfo);
         }
     }
     return squad_list as SquadList;
@@ -66,7 +66,7 @@ export function SpawnOrRun(spawner: StructureSpawn, spawn_info: SpawnInfo, spawn
 
 export function SpawnOrOperateSquad(spawner: StructureSpawn, squad_list: SquadList, can_spawn: boolean = true) {
     let spawned = !can_spawn;
-    for (const [_, spawn_info] of squad_list) {
+    for (const spawn_info of squad_list) {
         spawned ||= SpawnOrRun(spawner, spawn_info, !spawned);
     }
 }

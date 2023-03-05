@@ -3,16 +3,16 @@ import { SpawnTemplate } from './squad_utils';
 import { NaiveSettings, SourceMode, TargetMode, NaiveHarvesterInst } from '../roles/naive_harvester';
 
 const SPAWN_SEQUENCE: SpawnTemplate[] = [
-    new SpawnTemplate(NaiveHarvesterInst, "d#p#ctrl",
-        {
-            source: SourceMode.Primary,
-            target: TargetMode.Controller,
-            double_worker: true,
-        } as NaiveSettings),
     new SpawnTemplate(NaiveHarvesterInst, "d#p#spwn",
         {
             source: SourceMode.Primary,
             target: TargetMode.Spawner,
+            double_worker: true,
+        } as NaiveSettings),
+    new SpawnTemplate(NaiveHarvesterInst, "d#p#ctrl",
+        {
+            source: SourceMode.Primary,
+            target: TargetMode.Controller,
             double_worker: true,
         } as NaiveSettings),
     new SpawnTemplate(NaiveHarvesterInst, "d#p#bld",
@@ -22,17 +22,17 @@ const SPAWN_SEQUENCE: SpawnTemplate[] = [
             double_worker: true,
         } as NaiveSettings),
 
-    new SpawnTemplate(NaiveHarvesterInst, "dd#s#ctrl",
-        {
-            source: SourceMode.Secondary,
-            target: TargetMode.Controller,
-            double_worker: true,
-            double_carry: true,
-        } as NaiveSettings),
     new SpawnTemplate(NaiveHarvesterInst, "dd#s#spwn",
         {
             source: SourceMode.Secondary,
             target: TargetMode.Spawner,
+            double_worker: true,
+            double_carry: true,
+        } as NaiveSettings),
+    new SpawnTemplate(NaiveHarvesterInst, "dd#s#ctrl",
+        {
+            source: SourceMode.Secondary,
+            target: TargetMode.Controller,
             double_worker: true,
             double_carry: true,
         } as NaiveSettings),

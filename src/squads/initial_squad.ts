@@ -4,15 +4,15 @@ import { NaiveSettings, SourceMode, TargetMode, NaiveHarvesterInst } from '../ro
 import { DoubleSquadInst } from './double_squad';
 
 const SPAWN_SEQUENCE: SpawnTemplate[] = [
-    new SpawnTemplate(NaiveHarvesterInst, "p#ctrl",
-        {
-            source: SourceMode.Primary,
-            target: TargetMode.Controller
-        } as NaiveSettings),
     new SpawnTemplate(NaiveHarvesterInst, "p#spwn",
         {
             source: SourceMode.Primary,
             target: TargetMode.Spawner
+        } as NaiveSettings),
+    new SpawnTemplate(NaiveHarvesterInst, "p#ctrl",
+        {
+            source: SourceMode.Primary,
+            target: TargetMode.Controller
         } as NaiveSettings),
     new SpawnTemplate(NaiveHarvesterInst, "p#bld",
         {

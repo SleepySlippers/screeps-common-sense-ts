@@ -79,6 +79,12 @@ function ActionOrMove(creep: Creep, target: Actionable | null | undefined): bool
     const ret = CarryAction(creep, target);
     if (ret == ERR_NOT_IN_RANGE) {
         MoveTowards(creep, target, true);
+        const to_rapair = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+            filter: (i) => i.hits < i.hitsMax && i.hits < 250000
+        });
+        if (to_rapair) {
+            creep.repair(to_rapair);
+        }
         return true;
     }
     if (ret != OK) {
