@@ -38,7 +38,8 @@ declare global {
 
 // When compiling TS to JS and bundling with rollup, the line numbers and file names in error messages change
 // This utility uses source maps to get the line numbers and file names of the original, TS source code
-export const loop = ErrorMapper.wrapLoop(() => {
+export const loop = //ErrorMapper.wrapLoop(
+  () => {
   // console.log(`Current game tick is ${Game.time}. No way. Wait`);
 
   if (Game.cpu.bucket == 10000) {
@@ -63,4 +64,19 @@ export const loop = ErrorMapper.wrapLoop(() => {
   for (const squad of squads) {
     squad.Operate();
   }
-});
+
+  for (const spawn_key in Game.spawns) {
+    const spawner = Game.spawns[spawn_key];
+    const towers: StructureTower[] = spawner.room.find(FIND_STRUCTURES, {
+      filter: (i) => i.structureType == STRUCTURE_TOWER
+    });
+    for (const tower of towers){
+      const hostile_creep = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+      if (hostile_creep){
+        tower.attack(hostile_creep);
+
+      }
+    }
+  }
+}
+//);

@@ -9,6 +9,7 @@ export const enum TargetMode {
     Extentions,
     Container,
     Storage,
+    Tower,
     Build,
     Controller,
 }
@@ -109,6 +110,8 @@ function GetStructureType(mode: number) {
         return STRUCTURE_SPAWN;
     } else if (mode == TargetMode.Storage) {
         return STRUCTURE_STORAGE;
+    } else if (mode == TargetMode.Tower) {
+        return STRUCTURE_TOWER;
     }
     return null;
 }
