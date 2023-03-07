@@ -16,7 +16,7 @@ interface NaiveClaimerMemory extends CreepMemory {
 
 export class NaiveClaimer implements Role {
 
-    readonly role_name: string = "role_naive_attacker";
+    readonly role_name: string = "role_naive_claimer";
 
     private GetMemory(creep: Creep): NaiveClaimerMemory {
         return creep.memory;
@@ -39,9 +39,13 @@ export class NaiveClaimer implements Role {
             return
         }
         const controller = creep.room.controller;
-        if (controller) {
+        if (controller && (!controller.my || (controller.reservation?.username != creep.owner.username))) {
             const ret = creep.attackController(controller);
             if (ret == OK) {
+                return
+            }
+            if (ret == ERR_INVALID_TARGET){
+                creep.reserveController(controller);
                 return
             }
             if (ret == ERR_NOT_IN_RANGE) {

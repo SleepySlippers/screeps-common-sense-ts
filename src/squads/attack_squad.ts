@@ -4,6 +4,7 @@ import { NaiveAttackerSettings } from '../roles/naive_attacker';
 import { SpawnConstructibleSquad } from './squad_base';
 import { NaiveClaimerInst, NaiveClaimerSettings } from '../roles/naive_claimer';
 import { DoubleSquadInst } from './double_squad';
+import { NaiveHarvesterInst, SourceMode, TargetMode, NaiveHarvesterSettings } from '../roles/naive_harvester';
 
 const SPAWN_SEQUENCE: SpawnTemplate[] = [
     // new SpawnTemplate(NaiveAttackerInst, "d#p#spwn",
@@ -16,12 +17,25 @@ const SPAWN_SEQUENCE: SpawnTemplate[] = [
             target_room_name: 'E59N17'
         } as NaiveClaimerSettings,
     ),
+    new SpawnTemplate(NaiveHarvesterInst, "dd#foreign#bld",
+        {
+            source: SourceMode.Secondary,
+            target: TargetMode.Build,
+            double_worker: true,
+            double_carry: true,
+            foreign_room: 'E59N17',
+        } as NaiveHarvesterSettings, 2),
     // new SpawnTemplate(NaiveAttackerInst, "heavy",
     //     {
     //         target_room_name: 'E58N16',
     //         is_heavy: true
     //     } as NaiveAttackerSettings,
     //     4),
+    new SpawnTemplate(NaiveClaimerInst, "E58N16",
+        {
+            target_room_name: 'E58N16'
+        } as NaiveClaimerSettings,
+    ),
 ]
 
 export class AttackSquad extends SpawnConstructibleSquad {

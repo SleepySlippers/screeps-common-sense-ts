@@ -26,6 +26,7 @@ export class NaiveHarvesterSettings {
     target: TargetMode = TargetMode.Spawner;
     double_worker: boolean = false;
     double_carry: boolean = false;
+    foreign_room: string | null = null;
 }
 
 class NaiveHarvesterState {
@@ -169,12 +170,33 @@ export class NaiveHarvester implements Role {
 
     Run(creep: Creep): void {
         let creep_mem = this.GetMemory(creep);
+
+        if (creep_mem.settings.foreign_room != null && creep_mem.settings.foreign_room != creep.room.name) {
+            const exitDir = Game.map.findExit(creep.room, creep_mem.settings.foreign_room);
+            if (exitDir == -2 || exitDir == -10) {
+                console.log("Harvester cant find path");
+                return
+            }
+            const exit = creep.pos.findClosestByRange(exitDir);
+            if (exit) {
+                creep.moveTo(exit);
+                return
+            }
+            console.log("Harvester has no exit");
+            return
+        }
+
         const spawner: StructureSpawn = Game.getObjectById(creep_mem.spawner_id)!;
         this.UpdateState(creep);
 
         if (creep_mem.current_state.harvest) {
-            const src = GetSource(spawner, this.GetMemory(creep).settings.source);
-            ActionOrMove(creep, src);
+            if (spawner.room.name == creep.room.name){
+                const src = GetSource(spawner, this.GetMemory(creep).settings.source);
+                ActionOrMove(creep, src);
+            } else {
+                const src = creep.pos.findClosestByPath(FIND_SOURCES);
+                ActionOrMove(creep, src);
+            }
         } else {
 
             this.GoCarry(creep);
