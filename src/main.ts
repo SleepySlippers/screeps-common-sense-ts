@@ -57,7 +57,7 @@ export const loop = //ErrorMapper.wrapLoop(
   for (const spawn_key in Game.spawns) {
     const spawner = Game.spawns[spawn_key];
     for (const spawn_constructible_squad of spawn_constructible_squads) {
-      squads.push(spawn_constructible_squad.construct_from_spawner(spawner));
+      squads.push(spawn_constructible_squad().construct_from_spawner(spawner));
     }
   }
 
