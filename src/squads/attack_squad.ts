@@ -7,24 +7,24 @@ import { DoubleSquadInst } from './double_squad';
 import { NaiveHarvesterInst, SourceMode, TargetMode, NaiveHarvesterSettings } from '../roles/naive_harvester';
 
 const SPAWN_SEQUENCE: SpawnTemplate[] = [
-    // new SpawnTemplate(NaiveAttackerInst, "d#p#spwn",
+    // new SpawnTemplate(NaiveAttackerInst, "light",
     //     {
-    //         target_room_name: 'E59N17',
+    //         target_room_name: 'E58N17',
     //     } as NaiveAttackerSettings,
     //     2),
-    new SpawnTemplate(NaiveClaimerInst, "E59N17",
-        {
-            target_room_name: 'E59N17'
-        } as NaiveClaimerSettings,
-    ),
-    new SpawnTemplate(NaiveHarvesterInst, "dd#foreign#bld",
-        {
-            source: SourceMode.Secondary,
-            target: TargetMode.Build,
-            double_worker: true,
-            double_carry: true,
-            foreign_room: 'E59N17',
-        } as NaiveHarvesterSettings, 2),
+    // new SpawnTemplate(NaiveClaimerInst, "E59N17",
+    //     {
+    //         target_room_name: 'E59N17'
+    //     } as NaiveClaimerSettings,
+    // ),
+    // new SpawnTemplate(NaiveHarvesterInst, "dd#foreign#bld",
+    //     {
+    //         source: SourceMode.Secondary,
+    //         target: TargetMode.Build,
+    //         double_worker: true,
+    //         double_carry: true,
+    //         foreign_room: 'E59N17',
+    //     } as NaiveHarvesterSettings, 2),
     // new SpawnTemplate(NaiveAttackerInst, "heavy",
     //     {
     //         target_room_name: 'E58N16',

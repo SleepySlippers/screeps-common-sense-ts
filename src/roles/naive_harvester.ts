@@ -4,9 +4,9 @@ import { GetSourcesByDistance } from '../utils/memory';
 import { LogErr } from '../utils/utils';
 
 // priorotize delivery
-export const enum TargetMode {
+export enum TargetMode {
     Spawner,
-    Extentions,
+    Extensions,
     Container,
     Storage,
     Tower,
@@ -81,7 +81,7 @@ function ActionOrMove(creep: Creep, target: Actionable | null | undefined): bool
     if (ret == ERR_NOT_IN_RANGE) {
         MoveTowards(creep, target, true);
         const to_rapair = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-            filter: (i) => i.hits < i.hitsMax && i.hits < 250000
+            filter: (i) => i.hits < i.hitsMax && i.hits < 75000
         });
         if (to_rapair) {
             creep.repair(to_rapair);
@@ -98,14 +98,15 @@ function ActionOrMove(creep: Creep, target: Actionable | null | undefined): bool
 function GetClosestFreeStructure(creep: Creep, type: any) {
     return creep.pos.findClosestByRange(FIND_STRUCTURES, {
         filter: (i: any) => i.structureType == type &&
-            i.store.getFreeCapacity(RESOURCE_ENERGY) > 0
+            i.store.getFreeCapacity(RESOURCE_ENERGY) > 0 &&
+            i.store[RESOURCE_ENERGY] < 40000
     })
 }
 
 function GetStructureType(mode: number) {
     if (mode == TargetMode.Container) {
         return STRUCTURE_CONTAINER;
-    } else if (mode == TargetMode.Extentions) {
+    } else if (mode == TargetMode.Extensions) {
         return STRUCTURE_EXTENSION;
     } else if (mode == TargetMode.Spawner) {
         return STRUCTURE_SPAWN;
@@ -190,7 +191,7 @@ export class NaiveHarvester implements Role {
         this.UpdateState(creep);
 
         if (creep_mem.current_state.harvest) {
-            if (spawner.room.name == creep.room.name){
+            if (spawner.room.name == creep.room.name) {
                 const src = GetSource(spawner, this.GetMemory(creep).settings.source);
                 ActionOrMove(creep, src);
             } else {
