@@ -151,8 +151,12 @@ export class NaiveHarvester implements Role {
             targets.push(GetClosestFreeStructure(creep, structure_type));
         }
 
-        for (let i = 0; i < GREATEST_TARGET_MODE; ++i) {
-            const structure_type = GetStructureType(i);
+        for (const _mode in TargetMode){
+            const mode = +_mode;
+            if (isNaN(mode)){
+                continue;
+            }
+            const structure_type = GetStructureType(mode);
             if (!structure_type) {
                 continue;
             }
