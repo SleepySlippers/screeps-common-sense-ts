@@ -175,6 +175,7 @@ export class NaiveHarvester implements Role {
 
     Run(creep: Creep): void {
         let creep_mem = this.GetMemory(creep);
+        this.UpdateState(creep);
 
         if (creep_mem.settings.foreign_room != null &&
             Game.rooms[creep_mem.settings.foreign_room] &&
@@ -207,7 +208,6 @@ export class NaiveHarvester implements Role {
         }
 
         const spawner: StructureSpawn = Game.getObjectById(creep_mem.spawner_id)!;
-        this.UpdateState(creep);
 
         if (creep_mem.current_state.harvest) {
             if (spawner.room.name == creep.room.name) {
