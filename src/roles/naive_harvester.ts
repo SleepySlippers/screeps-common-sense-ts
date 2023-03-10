@@ -177,6 +177,11 @@ export class NaiveHarvester implements Role {
         let creep_mem = this.GetMemory(creep);
         this.UpdateState(creep);
 
+        let dropped_energy = creep.pos.findInRange(FIND_DROPPED_RESOURCES, 1);
+        if (dropped_energy.length > 0) {
+            creep.pickup(dropped_energy[0]);
+        }
+
         if (creep_mem.settings.foreign_room != null &&
             Game.rooms[creep_mem.settings.foreign_room] &&
             creep_mem.settings.target == TargetMode.Build) {
@@ -185,10 +190,15 @@ export class NaiveHarvester implements Role {
                 to_find = FIND_CONSTRUCTION_SITES;
             }
             const targets = Game.rooms[creep_mem.settings.foreign_room].find(to_find);
-            const target = creep.pos.findClosestByPath(targets);
-            if (target) {
-                ActionOrMove(creep, target);
-                return;
+            if (targets.length > 0) {
+                let target: null | Source | ConstructionSite = targets[0];
+                if (creep_mem.settings.foreign_room == creep.room.name){
+                    target = creep.pos.findClosestByPath(targets);
+                }
+                if (target) {
+                    ActionOrMove(creep, target);
+                    return;
+                }
             }
         }
 

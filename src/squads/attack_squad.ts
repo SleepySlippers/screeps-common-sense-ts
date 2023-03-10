@@ -31,11 +31,11 @@ const SPAWN_SEQUENCE: SpawnTemplate[] = [
     //         is_heavy: true
     //     } as NaiveAttackerSettings,
     //     4),
-    new SpawnTemplate(NaiveClaimerInst, "E58N16",
-        {
-            target_room_name: 'E58N16'
-        } as NaiveClaimerSettings,
-    ),
+    // new SpawnTemplate(NaiveClaimerInst, "E58N16",
+    //     {
+    //         target_room_name: 'E58N16'
+    //     } as NaiveClaimerSettings,
+    // ),
 ]
 
 export class AttackSquad extends SpawnConstructibleSquad {
