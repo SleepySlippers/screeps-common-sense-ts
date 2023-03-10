@@ -39,12 +39,12 @@ export class NaiveClaimer implements Role {
             return
         }
         const controller = creep.room.controller;
-        if (controller && (!controller.my || (controller.reservation?.username != creep.owner.username))) {
+        if (controller && !controller.my && controller.reservation?.username != creep.owner.username) {
             const ret = creep.attackController(controller);
             if (ret == OK) {
                 return
             }
-            if (ret == ERR_INVALID_TARGET){
+            if (ret == ERR_INVALID_TARGET) {
                 creep.reserveController(controller);
                 return
             }

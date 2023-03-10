@@ -151,9 +151,9 @@ export class NaiveHarvester implements Role {
             targets.push(GetClosestFreeStructure(creep, structure_type));
         }
 
-        for (const _mode in TargetMode){
+        for (const _mode in TargetMode) {
             const mode = +_mode;
-            if (isNaN(mode)){
+            if (isNaN(mode)) {
                 continue;
             }
             const structure_type = GetStructureType(mode);
@@ -175,6 +175,21 @@ export class NaiveHarvester implements Role {
 
     Run(creep: Creep): void {
         let creep_mem = this.GetMemory(creep);
+
+        if (creep_mem.settings.foreign_room != null &&
+            Game.rooms[creep_mem.settings.foreign_room] &&
+            creep_mem.settings.target == TargetMode.Build) {
+            let to_find: FIND_SOURCES | FIND_CONSTRUCTION_SITES = FIND_SOURCES;
+            if (!creep_mem.current_state.harvest) {
+                to_find = FIND_CONSTRUCTION_SITES;
+            }
+            const targets = Game.rooms[creep_mem.settings.foreign_room].find(to_find);
+            const target = creep.pos.findClosestByPath(targets);
+            if (target) {
+                ActionOrMove(creep, target);
+                return;
+            }
+        }
 
         if (creep_mem.settings.foreign_room != null && creep_mem.settings.foreign_room != creep.room.name) {
             const exitDir = Game.map.findExit(creep.room, creep_mem.settings.foreign_room);

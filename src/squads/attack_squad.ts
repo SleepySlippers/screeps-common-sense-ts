@@ -17,14 +17,14 @@ const SPAWN_SEQUENCE: SpawnTemplate[] = [
     //         target_room_name: 'E59N17'
     //     } as NaiveClaimerSettings,
     // ),
-    // new SpawnTemplate(NaiveHarvesterInst, "dd#foreign#bld",
-    //     {
-    //         source: SourceMode.Secondary,
-    //         target: TargetMode.Build,
-    //         double_worker: true,
-    //         double_carry: true,
-    //         foreign_room: 'E59N17',
-    //     } as NaiveHarvesterSettings, 2),
+    new SpawnTemplate(NaiveHarvesterInst, "dd#foreign#bld",
+        {
+            source: SourceMode.Primary,
+            target: TargetMode.Build,
+            double_worker: true,
+            double_carry: true,
+            foreign_room: 'E58N16',
+        } as NaiveHarvesterSettings, 1),
     // new SpawnTemplate(NaiveAttackerInst, "heavy",
     //     {
     //         target_room_name: 'E58N16',
