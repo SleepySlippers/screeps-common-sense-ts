@@ -5,3 +5,6 @@ export function contains(arr: any[], elem: any) {
 export function LogErr(creep: Creep, message: any): void {
     console.log("Error in creep `" + creep.name + "`: " + message);
 }
+
+export const ROOM_MAX_COORD = 49;
+export const ROOM_MIN_COORD = 0;

@@ -51,23 +51,26 @@ export class NaiveAttacker implements Role {
                     return
                 }
                 if (ret == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(hostile_spawn, { costCallback: function(roomName, costMatrix){
-                        if (hostile_ramparts.length < 1){
-                            return
-                        }
-                        if (roomName == hostile_ramparts[0].pos.roomName){
-                            for (let ramp of hostile_ramparts){
-                                costMatrix.set(ramp.pos.x, ramp.pos.y, Math.floor(ramp.hits / 20000));
+                    creep.moveTo(hostile_spawn, {
+                        costCallback: function (roomName, costMatrix) {
+                            if (hostile_ramparts.length < 1) {
+                                return
+                            }
+                            if (roomName == hostile_ramparts[0].pos.roomName) {
+                                for (let ramp of hostile_ramparts) {
+                                    costMatrix.set(ramp.pos.x, ramp.pos.y, Math.floor(ramp.hits / 20000));
+                                }
                             }
                         }
-                    } });
-
-                    const hostile_rampart = creep.pos.findInRange(hostile_ramparts, 1)
-                    if (hostile_rampart.length > 0) {
-                        hostile_rampart.sort((n1, n2) => n1.hits - n2.hits);
-                        creep.attack(hostile_rampart[0]);
+                    });
+                    if (creep_mem.settings.target_room_name == creep.room.name) {
+                        const hostile_rampart = creep.pos.findInRange(hostile_ramparts, 1)
+                        if (hostile_rampart.length > 0) {
+                            hostile_rampart.sort((n1, n2) => n1.hits - n2.hits);
+                            creep.attack(hostile_rampart[0]);
+                        }
+                        return
                     }
-                    return
                 }
                 LogErr(creep, ret);
                 return
@@ -110,25 +113,29 @@ export class NaiveAttacker implements Role {
                     return
                 }
                 if (ret == ERR_NOT_IN_RANGE) {
-                    const rett = creep.moveTo(hostile_spawn, { costCallback: function(roomName, costMatrix){
-                        if (hostile_ramparts.length < 1){
-                            return
-                        }
-                        if (roomName == hostile_ramparts[0].pos.roomName){
-                            for (let ramp of hostile_ramparts){
-                                costMatrix.set(ramp.pos.x, ramp.pos.y, Math.floor(ramp.hits / 20000));
+                    const rett = creep.moveTo(hostile_spawn, {
+                        costCallback: function (roomName, costMatrix) {
+                            if (hostile_ramparts.length < 1) {
+                                return
+                            }
+                            if (roomName == hostile_ramparts[0].pos.roomName) {
+                                for (let ramp of hostile_ramparts) {
+                                    costMatrix.set(ramp.pos.x, ramp.pos.y, Math.floor(ramp.hits / 20000));
+                                }
                             }
                         }
-                    } });
+                    });
                     if (rett == ERR_NO_PATH) {
                         break;
                     }
-                    const hostile_rampart = creep.pos.findInRange(hostile_ramparts, 1)
-                    if (hostile_rampart.length > 0) {
-                        hostile_rampart.sort((n1, n2) => n1.hits - n2.hits);
-                        creep.attack(hostile_rampart[0]);
+                    if (creep_mem.settings.target_room_name == creep.room.name) {
+                        const hostile_rampart = creep.pos.findInRange(hostile_ramparts, 1)
+                        if (hostile_rampart.length > 0) {
+                            hostile_rampart.sort((n1, n2) => n1.hits - n2.hits);
+                            creep.attack(hostile_rampart[0]);
+                        }
+                        return
                     }
-                    return
                 }
                 LogErr(creep, ret);
                 return

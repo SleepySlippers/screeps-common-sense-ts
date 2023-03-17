@@ -6,6 +6,7 @@ import { NaiveClaimerInst, NaiveClaimerSettings } from '../roles/naive_claimer';
 import { DoubleSquadInst } from './double_squad';
 import { NaiveHarvesterInst, SourceMode, TargetMode, NaiveHarvesterSettings } from '../roles/naive_harvester';
 import { NaiveExplorer, NaiveExplorerInst, NaiveExplorerSettings } from '../roles/naive_explorer';
+import { NaiveTricker, NaiveTrickerInst, NaiveTrickerSettings } from '../roles/naive_tricker';
 
 const SPAWN_SEQUENCE: SpawnTemplate[] = [
     // new SpawnTemplate(NaiveAttackerInst, "light",
@@ -26,6 +27,11 @@ const SPAWN_SEQUENCE: SpawnTemplate[] = [
     //         double_carry: true,
     //         foreign_room: 'E58N16',
     //     } as NaiveHarvesterSettings, 1),
+    new SpawnTemplate(NaiveTrickerInst, "hehe",
+        {
+            target_room_name: 'E58N14'
+        } as NaiveTrickerSettings
+    ),
     new SpawnTemplate(NaiveExplorerInst, "light",
         {
             target_room_name: 'E58N14'
