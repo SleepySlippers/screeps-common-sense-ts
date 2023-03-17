@@ -7,6 +7,7 @@ import { DoubleSquadInst } from './double_squad';
 import { NaiveHarvesterInst, SourceMode, TargetMode, NaiveHarvesterSettings } from '../roles/naive_harvester';
 import { NaiveExplorer, NaiveExplorerInst, NaiveExplorerSettings } from '../roles/naive_explorer';
 import { NaiveTricker, NaiveTrickerInst, NaiveTrickerSettings } from '../roles/naive_tricker';
+import { NaiveHealerInst, NaiveHealerSettings } from '../roles/naive_healer';
 
 const SPAWN_SEQUENCE: SpawnTemplate[] = [
     // new SpawnTemplate(NaiveAttackerInst, "light",
@@ -31,6 +32,11 @@ const SPAWN_SEQUENCE: SpawnTemplate[] = [
         {
             target_room_name: 'E58N14'
         } as NaiveTrickerSettings
+    ),
+    new SpawnTemplate(NaiveHealerInst, "light",
+        {
+            
+        } as NaiveHealerSettings
     ),
     new SpawnTemplate(NaiveExplorerInst, "light",
         {

@@ -67,7 +67,8 @@ export class NaiveTricker implements Role {
                 }
             }
             if (poses.length > 0){
-                creep.moveTo(poses[0])
+                let randInd = creep.id.charCodeAt(creep.id.length - 1) % poses.length
+                creep.moveTo(poses[randInd])
                 return
             }
             const exitDir = Game.map.findExit(creep.room, creep_mem.settings.target_room_name);
