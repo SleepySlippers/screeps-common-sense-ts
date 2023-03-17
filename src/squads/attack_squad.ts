@@ -5,6 +5,7 @@ import { SpawnConstructibleSquad } from './squad_base';
 import { NaiveClaimerInst, NaiveClaimerSettings } from '../roles/naive_claimer';
 import { DoubleSquadInst } from './double_squad';
 import { NaiveHarvesterInst, SourceMode, TargetMode, NaiveHarvesterSettings } from '../roles/naive_harvester';
+import { NaiveExplorer, NaiveExplorerInst, NaiveExplorerSettings } from '../roles/naive_explorer';
 
 const SPAWN_SEQUENCE: SpawnTemplate[] = [
     // new SpawnTemplate(NaiveAttackerInst, "light",
@@ -17,20 +18,25 @@ const SPAWN_SEQUENCE: SpawnTemplate[] = [
     //         target_room_name: 'E59N17'
     //     } as NaiveClaimerSettings,
     // ),
-    new SpawnTemplate(NaiveHarvesterInst, "dd#foreign#bld",
-        {
-            source: SourceMode.Primary,
-            target: TargetMode.Build,
-            double_worker: true,
-            double_carry: true,
-            foreign_room: 'E58N16',
-        } as NaiveHarvesterSettings, 1),
-    // new SpawnTemplate(NaiveAttackerInst, "heavy",
+    // new SpawnTemplate(NaiveHarvesterInst, "dd#foreign#bld",
     //     {
-    //         target_room_name: 'E58N16',
-    //         is_heavy: true
-    //     } as NaiveAttackerSettings,
-    //     4),
+    //         source: SourceMode.Primary,
+    //         target: TargetMode.Build,
+    //         double_worker: true,
+    //         double_carry: true,
+    //         foreign_room: 'E58N16',
+    //     } as NaiveHarvesterSettings, 1),
+    new SpawnTemplate(NaiveExplorerInst, "light",
+        {
+            target_room_name: 'E58N14'
+        } as NaiveExplorerSettings
+    ),
+    new SpawnTemplate(NaiveAttackerInst, "heavy",
+        {
+            target_room_name: 'E58N14',
+            is_heavy: true
+        } as NaiveAttackerSettings,
+        4),
     // new SpawnTemplate(NaiveClaimerInst, "E58N16",
     //     {
     //         target_room_name: 'E58N16'

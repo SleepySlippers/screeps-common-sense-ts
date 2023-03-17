@@ -42,8 +42,8 @@ export class NaiveAttacker implements Role {
                 hostile_spawn = hostile_spawns[0] as StructureSpawn;
             }
             if (hostile_spawn) {
-                const hostile_ramparts = target_room.find(FIND_HOSTILE_STRUCTURES, {
-                    filter: (i) => i.structureType == STRUCTURE_RAMPART
+                const hostile_ramparts = creep.room.find(FIND_STRUCTURES, {
+                    filter: (i) => ((i.structureType == STRUCTURE_WALL) || (i.structureType == STRUCTURE_RAMPART))
                 });
 
                 let ret = creep.attack(hostile_spawn);
@@ -51,12 +51,21 @@ export class NaiveAttacker implements Role {
                     return
                 }
                 if (ret == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(hostile_spawn, { ignore: hostile_ramparts });
-                    const hostile_rampart = creep.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES, {
-                        filter: (i) => i.structureType == STRUCTURE_RAMPART
-                    });
-                    if (hostile_rampart) {
-                        creep.attack(hostile_rampart);
+                    creep.moveTo(hostile_spawn, { costCallback: function(roomName, costMatrix){
+                        if (hostile_ramparts.length < 1){
+                            return
+                        }
+                        if (roomName == hostile_ramparts[0].pos.roomName){
+                            for (let ramp of hostile_ramparts){
+                                costMatrix.set(ramp.pos.x, ramp.pos.y, Math.floor(ramp.hits / 20000));
+                            }
+                        }
+                    } });
+
+                    const hostile_rampart = creep.pos.findInRange(hostile_ramparts, 1)
+                    if (hostile_rampart.length > 0) {
+                        hostile_rampart.sort((n1, n2) => n1.hits - n2.hits);
+                        creep.attack(hostile_rampart[0]);
                     }
                     return
                 }
@@ -66,26 +75,29 @@ export class NaiveAttacker implements Role {
         }
 
         if (creep_mem.settings.target_room_name != creep.room.name) {
-            const exitDir = Game.map.findExit(creep.room, creep_mem.settings.target_room_name);
-            if (exitDir == -2 || exitDir == -10) {
-                console.log("Attacker cant find path");
-                return
-            }
-            LogErr(creep, "here" + creep.room.name + " " + creep_mem.settings.target_room_name);
-            const exit = creep.pos.findClosestByRange(exitDir);
-            if (exit) {
-                creep.moveTo(exit);
-                return
-            }
-            console.log("Attacker has no exit");
+            creep.moveTo(new RoomPosition(25, 25, creep_mem.settings.target_room_name));
             return
+            // const exitDir = Game.map.findExit(creep.room, creep_mem.settings.target_room_name);
+            // if (exitDir == -2 || exitDir == -10) {
+            //     console.log("Attacker cant find path");
+            //     return
+            // }
+            // LogErr(creep, "here" + creep.room.name + " " + creep_mem.settings.target_room_name);
+            // const exit = creep.pos.findClosestByRange(exitDir);
+            // if (exit) {
+            //     creep.moveTo(exit);
+            //     return
+            // }
+            // console.log("Attacker has no exit");
+            // return
         }
+
         // LogErr(creep, "here" + creep.room.name + " " + creep_mem.settings.target_room_name);
-        const hostile_spawn = creep.pos.findClosestByPath(FIND_HOSTILE_STRUCTURES, {
+        const hostile_spawn = creep.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES, {
             filter: (i) => i.structureType == STRUCTURE_SPAWN
         })
-        const hostile_ramparts = creep.room.find(FIND_HOSTILE_STRUCTURES, {
-            filter: (i) => i.structureType == STRUCTURE_RAMPART
+        const hostile_ramparts = creep.room.find(FIND_STRUCTURES, {
+            filter: (i) => ((i.structureType == STRUCTURE_WALL) || (i.structureType == STRUCTURE_RAMPART))
         });
 
         do {
@@ -98,15 +110,23 @@ export class NaiveAttacker implements Role {
                     return
                 }
                 if (ret == ERR_NOT_IN_RANGE) {
-                    const rett = creep.moveTo(hostile_spawn, { ignore: hostile_ramparts });
+                    const rett = creep.moveTo(hostile_spawn, { costCallback: function(roomName, costMatrix){
+                        if (hostile_ramparts.length < 1){
+                            return
+                        }
+                        if (roomName == hostile_ramparts[0].pos.roomName){
+                            for (let ramp of hostile_ramparts){
+                                costMatrix.set(ramp.pos.x, ramp.pos.y, Math.floor(ramp.hits / 20000));
+                            }
+                        }
+                    } });
                     if (rett == ERR_NO_PATH) {
                         break;
                     }
-                    const hostile_rampart = creep.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES, {
-                        filter: (i) => i.structureType == STRUCTURE_RAMPART
-                    });
-                    if (hostile_rampart) {
-                        creep.attack(hostile_rampart);
+                    const hostile_rampart = creep.pos.findInRange(hostile_ramparts, 1)
+                    if (hostile_rampart.length > 0) {
+                        hostile_rampart.sort((n1, n2) => n1.hits - n2.hits);
+                        creep.attack(hostile_rampart[0]);
                     }
                     return
                 }
