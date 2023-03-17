@@ -50,6 +50,9 @@ export function SpawnOrRun(spawner: StructureSpawn, spawn_info: SpawnInfo, spawn
     // try {
     let creep: Creep = Game.creeps[spawn_info.creep_name];
     if (creep) {
+        if (creep.spawning){
+            return false
+        }
         spawn_info.role.Run(creep);
         return false;
     }

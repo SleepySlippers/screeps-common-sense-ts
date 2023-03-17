@@ -25,22 +25,22 @@ export class NaiveTricker implements Role {
     Run(creep: Creep): void {
         const creep_mem = this.GetMemory(creep);
 
-        if (creep.hits < creep.hitsMax) {
+        if (creep.hits < creep.hitsMax && creep_mem.settings.target_room_name != creep.room.name) {
             // move out of border
-            if (creep.pos.x == ROOM_MIN_COORD) {
-                creep.move(RIGHT);
+            if (creep.pos.x <= ROOM_MIN_COORD + 2) {
+                creep.moveTo(creep.pos.x + 2, creep.pos.y, {reusePath: 0});
                 return
             }
-            if (creep.pos.y == ROOM_MIN_COORD) {
-                creep.move(BOTTOM);
+            if (creep.pos.y <= ROOM_MIN_COORD + 2) {
+                creep.moveTo(creep.pos.x, creep.pos.y + 2, {reusePath: 0});
                 return
             }
-            if (creep.pos.x == ROOM_MAX_COORD) {
-                creep.move(LEFT);
+            if (creep.pos.x >= ROOM_MAX_COORD - 2) {
+                creep.moveTo(creep.pos.x - 2, creep.pos.y, {reusePath: 0});
                 return
             }
-            if (creep.pos.y == ROOM_MAX_COORD) {
-                creep.move(TOP);
+            if (creep.pos.y >= ROOM_MAX_COORD - 2) {
+                creep.moveTo(creep.pos.x, creep.pos.y - 2, {reusePath: 0});
                 return
             }
             return

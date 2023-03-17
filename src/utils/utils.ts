@@ -3,7 +3,7 @@ export function contains(arr: any[], elem: any) {
 }
 
 export function LogErr(creep: Creep, message: any): void {
-    console.log("Error in creep `" + creep.name + "`: " + message);
+    console.log("Error in creep `" + creep.name + "` from here:" + creep.pos + ": " + message);
 }
 
 export const ROOM_MAX_COORD = 49;

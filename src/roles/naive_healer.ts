@@ -2,7 +2,7 @@ import { CreepName, Role } from "./role";
 import { LogErr, ROOM_MIN_COORD, ROOM_MAX_COORD } from '../utils/utils';
 
 export class NaiveHealerSettings {
-
+    default_room_name?: string;
 }
 
 class NaiveHealerState {
@@ -25,17 +25,33 @@ export class NaiveHealer implements Role {
     Run(creep: Creep): void {
         const creep_mem = this.GetMemory(creep);
 
-        for (const nm in Game.creeps){
+        LogErr(creep, "i'm alive")
+
+        let ill = creep.pos.findClosestByRange(FIND_MY_CREEPS, {
+            filter: (i) => i.hits < i.hitsMax
+        })
+        if (ill) {
+            const ret = creep.heal(ill)
+            if (creep.pos.findInRange(FIND_MY_CREEPS, 1, {
+                filter: (i) => i.id == ill?.id
+            }).length < 1) {
+                creep.moveTo(ill)
+            }
+            return
+        }
+
+        for (const nm in Game.creeps) {
             const crep = Game.creeps[nm]
-            if (crep.hits < crep.hitsMax){
+            if (crep.hits < crep.hitsMax) {
                 const ret = creep.heal(crep)
-                if (ret == ERR_NOT_IN_RANGE){
-                    creep.moveTo(crep)
-                }
+                creep.moveTo(crep)
                 return
             }
         }
 
+        if (creep_mem.settings.default_room_name != null && creep_mem.settings.default_room_name != creep.room.name) {
+            creep.moveTo(new RoomPosition(25, 25, creep_mem.settings.default_room_name))
+        }
     }
     Spawn(spawner: StructureSpawn, creep_name: CreepName, settings: NaiveHealerSettings): ScreepsReturnCode {
         let body = [HEAL, MOVE];

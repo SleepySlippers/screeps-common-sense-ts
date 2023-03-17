@@ -78,7 +78,8 @@ export class NaiveAttacker implements Role {
         }
 
         if (creep_mem.settings.target_room_name != creep.room.name) {
-            creep.moveTo(new RoomPosition(25, 25, creep_mem.settings.target_room_name));
+            let ret = creep.moveTo(new RoomPosition(25, 25, creep_mem.settings.target_room_name));
+            console.log("here " + ret)
             return
             // const exitDir = Game.map.findExit(creep.room, creep_mem.settings.target_room_name);
             // if (exitDir == -2 || exitDir == -10) {
