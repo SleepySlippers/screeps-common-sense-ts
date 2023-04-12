@@ -70,6 +70,7 @@ export function SpawnOrRun(spawner: StructureSpawn, spawn_info: SpawnInfo, spawn
 export function SpawnOrOperateSquad(spawner: StructureSpawn, squad_list: SquadList, can_spawn: boolean = true) {
     let spawned = !can_spawn;
     for (const spawn_info of squad_list) {
-        spawned ||= SpawnOrRun(spawner, spawn_info, !spawned);
+        let tmp = SpawnOrRun(spawner, spawn_info, !spawned);
+        spawned ||= tmp;
     }
 }

@@ -9,6 +9,9 @@ import { NaiveExplorer, NaiveExplorerInst, NaiveExplorerSettings } from '../role
 import { NaiveTricker, NaiveTrickerInst, NaiveTrickerSettings } from '../roles/naive_tricker';
 import { NaiveHealerInst, NaiveHealerSettings } from '../roles/naive_healer';
 
+const TARGET_ROOM = "E57N17"
+const NEIGHBOR_ROOM = "E58N17"
+
 const SPAWN_SEQUENCE: SpawnTemplate[] = [
     // new SpawnTemplate(NaiveAttackerInst, "light",
     //     {
@@ -28,27 +31,27 @@ const SPAWN_SEQUENCE: SpawnTemplate[] = [
     //         double_carry: true,
     //         foreign_room: 'E58N16',
     //     } as NaiveHarvesterSettings, 1),
-    // new SpawnTemplate(NaiveTrickerInst, "hehe",
-    //     {
-    //         target_room_name: 'E58N14'
-    //     } as NaiveTrickerSettings
-    // ),
-    // new SpawnTemplate(NaiveHealerInst, "light",
-    //     {
-    //         default_room_name: 'E58N15'
-    //     } as NaiveHealerSettings
-    // ),
-    // new SpawnTemplate(NaiveExplorerInst, "light",
-    //     {
-    //         target_room_name: 'E59N12'
-    //     } as NaiveExplorerSettings
-    // ),
-    // new SpawnTemplate(NaiveAttackerInst, "heavy",
-    //     {
-    //         target_room_name: 'E59N12',
-    //         is_heavy: true
-    //     } as NaiveAttackerSettings,
-    //     4),
+    new SpawnTemplate(NaiveTrickerInst, "hehe",
+        {
+            target_room_name: TARGET_ROOM
+        } as NaiveTrickerSettings
+    ),
+    new SpawnTemplate(NaiveHealerInst, "light",
+        {
+            default_room_name: NEIGHBOR_ROOM
+        } as NaiveHealerSettings
+    ),
+    new SpawnTemplate(NaiveExplorerInst, "light",
+        {
+            target_room_name: TARGET_ROOM
+        } as NaiveExplorerSettings
+    ),
+    new SpawnTemplate(NaiveAttackerInst, "heavy",
+        {
+            target_room_name: TARGET_ROOM,
+            is_heavy: true
+        } as NaiveAttackerSettings,
+        4),
     // new SpawnTemplate(NaiveClaimerInst, "E58N16",
     //     {
     //         target_room_name: 'E58N16'
