@@ -3954,7 +3954,11 @@ let
       sources."brace-expansion-1.1.12"
       sources."braces-3.0.3"
       sources."browser-stdout-1.3.1"
-      sources."bufferutil-4.1.0"
+      (sources."bufferutil-4.1.0" // {
+        dependencies = [
+          sources."node-gyp-build-4.8.4"
+        ];
+      })
       sources."builtin-modules-3.3.0"
       sources."call-bind-1.0.8"
       sources."call-bind-apply-helpers-1.0.2"
@@ -4349,7 +4353,11 @@ let
         ];
       })
       sources."uri-js-4.4.1"
-      sources."utf-8-validate-5.0.10"
+      (sources."utf-8-validate-5.0.10" // {
+        dependencies = [
+          sources."node-gyp-build-4.8.4"
+        ];
+      })
       sources."v8-compile-cache-2.4.0"
       sources."v8-compile-cache-lib-3.0.1"
       sources."which-2.0.2"
