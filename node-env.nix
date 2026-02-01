@@ -678,6 +678,9 @@ let
       shellHook = lib.optionalString (dependencies != []) ''
         export NODE_PATH=${nodeDependencies}/lib/node_modules
         export PATH="${nodeDependencies}/bin:$PATH"
+
+        rm -rf node_modules
+        ln -s $NODE_PATH ./
       '';
     } // extraArgs);
 in

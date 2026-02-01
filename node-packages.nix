@@ -337,13 +337,13 @@ let
         sha512 = "dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==";
       };
     };
-    "@types/lodash-3.10.2" = {
+    "@types/lodash-3.10.9" = {
       name = "_at_types_slash_lodash";
       packageName = "@types/lodash";
-      version = "3.10.2";
+      version = "3.10.9";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@types/lodash/-/lodash-3.10.2.tgz";
-        sha512 = "TmlYodTNhMzVzv3CK/9sXGzh31jWsRKHE3faczhVgYFCdXIRQRCOPD+0NDlR+SvJlCj914yP3q3aAupt53p2Ug==";
+        url = "https://registry.npmjs.org/@types/lodash/-/lodash-3.10.9.tgz";
+        sha512 = "BqzpDcDNIj0D15QezYF2C8OhOZVsm3g9Y6bLfXC6jO+wgxDGdCJlzge9OqnI0RezYJNsfsGXovhb3zTZjHpiCA==";
       };
     };
     "@types/mocha-5.2.7" = {
@@ -3901,7 +3901,7 @@ let
       sources."@types/estree-1.0.8"
       sources."@types/json-schema-7.0.15"
       sources."@types/json5-0.0.29"
-      sources."@types/lodash-3.10.2"
+      sources."@types/lodash-3.10.9"
       sources."@types/mocha-5.2.7"
       sources."@types/node-13.13.52"
       sources."@types/resolve-1.17.1"
